@@ -17,10 +17,6 @@ function crearTabla() {
     let name = document.getElementById("name");
     let lastname = document.getElementById("lastname");
     let grupo = document.getElementById("grupo");
-    let notaDesarrollo = document.getElementById("notaDesarrollo");
-    let notaIngles = document.getElementById("notaIngles");
-    let notaHabilidades = document.getElementById("notaHabilidades");
-    let promedioFinal;
 
     // Validar que si están todos los datos ingresados
     if (name.value === '' || lastname.value === '' || grupo.value === '') {
@@ -35,7 +31,7 @@ function crearTabla() {
 
     // Encabezados de la tabla
     let encabezados = ["Nombre", "Apellido", "Grupo", "Nota Desarrollo", "Nota Ingles", "Nota Habilidades para la vida", "Nota Review", "Promedio Final"];
-    
+
     let encabezadosCabecera = document.createElement("tr");
 
     encabezados.forEach((encabezado) => {
@@ -56,8 +52,12 @@ function agregarFila(tabla) {
     // Objetos para la información del formulario
     let name = document.getElementById("name");
     let lastname = document.getElementById("lastname");
-    let age = document.getElementById("age");
     let grupo = document.getElementById("grupo");
+    let notaDesarrollo = document.getElementById("notaDesarrollo");
+    let notaIngles = document.getElementById("notaIngles");
+    let notaHabilidades = document.getElementById("notaHabilidades");
+    
+    
 
     //Tabla de Grupo Etario
     if (age.value >= 0 && age.value <= 5) {
