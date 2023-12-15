@@ -6,7 +6,7 @@ body {
     height: 100vh;
     flex-direction: column;
     text-align: center;
-/*     background-image: url("../Img/19742.png"); */
+    background-image: url("../Img/back.jpg"); 
 }
 
 #tablaEpica {
@@ -23,4 +23,12 @@ body {
 
 td {
     padding: 5px 20px 5px 20px;
+}
+
+.aprobado {
+    background-color: greenyellow;
+}
+
+.desaprobado {
+    background-color: brown;
 }

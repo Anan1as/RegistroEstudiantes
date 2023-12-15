@@ -30,7 +30,7 @@ function crearTabla() {
     tabla.setAttribute("id", "tablaEpica");
 
     // Encabezados de la tabla
-    let encabezados = ["Nombre", "Apellido", "Grupo", "Nota Desarrollo", "Nota Ingles", "Nota Habilidades para la vida", "Nota Review", "Promedio Final"];
+    let encabezados = ["Nombre", "Apellido", "Grupo", "Nota Desarrollo", "Nota Ingles", "Nota Habilidades para la vida", "Nota Review", "Promedio Final", "Editar", "Eliminar"];
 
     let encabezadosCabecera = document.createElement("tr");
 
@@ -44,6 +44,14 @@ function crearTabla() {
 
     agregarFila(tabla);
 
+    name.value = '';
+    lastname.value = '';
+    grupo.value = '';
+    notaDesarrollo.value = '';
+    notaIngles.value = '';
+    notaHabilidades.value = '';
+    notaReview.value = '';
+
     document.body.appendChild(tabla);
 }
 
@@ -56,26 +64,9 @@ function agregarFila(tabla) {
     let notaDesarrollo = document.getElementById("notaDesarrollo");
     let notaIngles = document.getElementById("notaIngles");
     let notaHabilidades = document.getElementById("notaHabilidades");
+    let notaReview = document.getElementById("notaReview");
+    let promedio = (parseFloat(notaDesarrollo.value) + parseFloat(notaIngles.value) + parseFloat(notaHabilidades.value) + parseFloat(notaReview.value)) / 4;
     
-    
-
-    //Tabla de Grupo Etario
-    if (age.value >= 0 && age.value <= 5) {
-        grupoEtario = "Primera Infancia";
-    } else if (age.value >= 6 && age.value <= 11) {
-        grupoEtario = "Infancia";
-    } else if (age.value >= 12 && age.value <= 18) {
-        grupoEtario = "Adolescencia";
-    } else if (age.value >= 19 && age.value <= 26) {
-        grupoEtario = "Juventud";
-    } else if (age.value >= 27 && age.value <= 59) {
-        grupoEtario = "Adultez";
-    } else if (age.value >= 60) {
-        grupoEtario = "Persona Mayor";
-    } else {
-        grupoEtario = "Sospechosita tu edad."
-    };
-
     // Crear fila con los datos del formulario
     let fila = document.createElement("tr");
 
@@ -87,17 +78,29 @@ function agregarFila(tabla) {
     lastnameCell.textContent = lastname.value;
     fila.appendChild(lastnameCell);
 
-    let ageCell = document.createElement("td");
-    ageCell.textContent = age.value;
-    fila.appendChild(ageCell);
-
     let grupoCell = document.createElement("td");
     grupoCell.textContent = grupo.value;
     fila.appendChild(grupoCell);
 
-    let grupoEtarioCell = document.createElement("td");
-    grupoEtarioCell.textContent = grupoEtario;
-    fila.appendChild(grupoEtarioCell);
+    let notaDesarrolloCell = document.createElement("td");
+    notaDesarrolloCell.textContent = notaDesarrollo.value;
+    fila.appendChild(notaDesarrolloCell);
+
+    let notaInglesCell = document.createElement("td");
+    notaInglesCell.textContent = notaIngles.value;
+    fila.appendChild(notaInglesCell);
+
+    let notaHabilidadesCell = document.createElement("td");
+    notaHabilidadesCell.textContent = notaHabilidades.value;
+    fila.appendChild(notaHabilidadesCell);
+
+    let notaReviewCell = document.createElement("td");
+    notaReviewCell.textContent = notaReview.value;
+    fila.appendChild(notaReviewCell);
+
+    let promedioCell = document.createElement("td");
+    promedioCell.textContent = promedio;
+    fila.appendChild(promedioCell);
 
     // Crear celdas para los botones de Editar y Eliminar
     let editarCell = document.createElement("td");
@@ -109,8 +112,13 @@ function agregarFila(tabla) {
     editarBtn.addEventListener("click", function () {
         name.value = nameCell.textContent;
         lastname.value = lastnameCell.textContent;
-        age.value = ageCell.textContent;
         grupo.value = grupoCell.textContent;
+        notaDesarrollo.value = notaDesarrolloCell.textContent;
+        notaIngles.value = notaInglesCell.textContent;
+        notaHabilidades.value = notaHabilidadesCell.textContent;
+        notaReview.value = notaReviewCell.textContent;
+
+        tabla.removeChild(fila);
     });
     editarCell.appendChild(editarBtn);
 
@@ -125,6 +133,14 @@ function agregarFila(tabla) {
     fila.appendChild(editarCell);
     fila.appendChild(eliminarCell);
 
+    name.value = '';
+    lastname.value = '';
+    grupo.value = '';
+    notaDesarrollo.value = '';
+    notaIngles.value = '';
+    notaHabilidades.value = '';
+    notaReview.value = '';
+
     tabla.appendChild(fila);
 }
 
@@ -138,25 +154,15 @@ cambiarColorBtn.addEventListener("click", function () {
 
     filas.forEach((fila, index) => {
         if (index === 0) return;
-        let grupoCell = fila.getElementsByTagName("td")[3];
-        let grupoValor = grupoCell.textContent.toLowerCase().trim();
+        let promedioCell = fila.getElementsByTagName("td")[7];
+        let promedioValor = parseFloat(promedioCell.textContent);
 
-        switch (grupoValor) {
-            case "jobs":
-                fila.style.backgroundColor = "lightgreen";
-                break;
-            case "tesla":
-                fila.style.backgroundColor = "lightblue";
-                break;
-            case "lovelace":
-                fila.style.backgroundColor = "lightcoral";
-                break;
-            case "ritche":
-                fila.style.backgroundColor = "crimson";
-                break;
-            default:
-                fila.style.backgroundColor = "white";
-                break;
-        };
+        if (promedioValor >= 3) {
+            fila.classList.toggle("aprobado");
+            fila.classList.remove("desaprobado");
+        } else {
+            fila.classList.toggle("desaprobado");
+            fila.classList.remove("aprobado");
+        }
     });
 });
